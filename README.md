@@ -19,10 +19,14 @@ Nehézség: Könnyű
 # Referenciák
 
 Gombnyomogatás:
+
 https://p5js.org/reference/#/p5/keyPressed funkció
+
 https://p5js.org/reference/#/p5/keyCode
 
 Példa:
+
+```
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {
     dimensions.x = dimensions.x - size
@@ -30,3 +34,4 @@ function keyPressed() {
     dimensions.x = dimensions.x + size
   }
 }
+```
