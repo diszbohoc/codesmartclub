@@ -1,12 +1,17 @@
 # Választott Project feladat
 
 Név:Boxerman
+
 Kategória: Játék
+
 Rövid leírás:Tologatni kell a dobozokat, mindet a kijelölt helyére
+
 Lsd: https://www.youtube.com/watch?v=xvu6r5_4_T4
+
 Nehézség: Könnyű
 
 # Javasolt lépések az első alkalom után
+
 1. Hozz létre egy felületet, üres (vagy valami színes) háttérrel
 2. Hozz létre egy tologató emberkét, aki gombnyomásra megy faltól-falig
 3. Hozz létre 1 dobozt, amit az emberke "tologat"
