@@ -2,6 +2,8 @@ function setup() {
   createCanvas(400, 400);
 }
 
+
+// https://www.w3schools.com/js/js_objects.asp
 const kor = {
   x: 200,
   y: 200,
@@ -46,6 +48,7 @@ function figura() {
 
 function mozgatas(object){
    const leptek = 5
+   // https://bobbyhadz.com/blog/javascript-specify-multiple-conditions-in-if-statement
    if (keyCode === LEFT_ARROW && object.x != 20) {
       object.x -= leptek;
     }
