@@ -16,6 +16,13 @@ Nehézség: Könnyű
 2. Hozz létre egy tologató emberkét, aki gombnyomásra megy faltól-falig
 3. Hozz létre 1 dobozt, amit az emberke "tologat"
 
+# 2. Alkalom
+
+1. Egyszerűsítsd a változóidat. Sok val -> const object, jellemzők szerint (kör, negyzet, koordinatak)
+2. Amit kétszer leírsz és érték, az változóba megy, és ami kód, az funkcióba
+3. Komplex kondíciókra lásd a példát
+4. Kondíciókban: negálás != egyezés ===
+
 # Referenciák
 
 Gombnyomogatás:
@@ -35,3 +42,16 @@ function keyPressed() {
   }
 }
 ```
+
+Javascript adatstruktúrák, az object:
+
+https://www.w3schools.com/js/js_objects.asp
+
+Komplex feltételek:
+
+https://bobbyhadz.com/blog/javascript-specify-multiple-conditions-in-if-statement
+
+Funkciók paraméterekkel:
+
+https://www.w3schools.com/js/js_function_parameters.asp
+
