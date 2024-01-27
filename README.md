@@ -23,6 +23,20 @@ Nehézség: Könnyű
 3. Komplex kondíciókra lásd a példát
 4. Kondíciókban: negálás != egyezés ===
 
+# 3. alkalom
+
+Rövid egyeztetés dícséretekkel fűszerezve. Az alapfunkciók kész vannak. 
+Egyetlen bug van: a kis kör be tud menni a doboz alá, ha jó helyre kerül
+
+## Következő feladat
+Készítsd el az első szintent.
+
+1. Falak: először egy keret. Ez móddsítani fogja a max/min mozgást.
+  Tipp: kell hozzá majd egy ciklus
+2. A dobozt középre kell tolni
+3. Bónusz: az első szinten 2 dobozt kell a helyére tolni, hogy vége legyen
+4. A dobozt akkor is tovább lehet tolni, ha jó helyen van!
+
 # Referenciák
 
 Gombnyomogatás:
@@ -54,4 +68,9 @@ https://bobbyhadz.com/blog/javascript-specify-multiple-conditions-in-if-statemen
 Funkciók paraméterekkel:
 
 https://www.w3schools.com/js/js_function_parameters.asp
+
+Ciklusok:
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration
+https://webiskola.hu/javascript-ismeretek/javascript-ciklusok-azaz-js-iteraciok-for-while-do-while/
 

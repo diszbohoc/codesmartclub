@@ -2,54 +2,96 @@ function setup() {
   createCanvas(400, 400);
 }
 
+function draw() {
+  background(220);
+}
 
 // https://www.w3schools.com/js/js_objects.asp
 const kor = {
-  x: 200,
-  y: 200,
+  x: 20,
+  y: 140,
   r: 40,
   utolso_hely: {
     x: 0,
-    y: 0
-  }
-}
+    y: 0,
+  },
+};
 
+const negyzet = {
+  x: 60,
+  y: 180,
+  w: 20,
+  h: 20,
+  utolso_hely: {
+    x: 60,
+    y: 180,
+  },
+};
 
-let xKor = 200;
-let yKor = 200;
-let xDoboz = 100;
-let yDoboz = 100;
-let xJo = 100;
-let yJo = 10;
-let wDoboz = 20;
-let rKor = 40;
+const johely = {
+  x: 100,
+  y: 20,
+  w: 20,
+  h: 20,
+};
 
 function draw() {
   background(250);
-  frameRate(50)
-  rectMode(RADIUS)
-  
+  rectMode(RADIUS);
+  joHely();
 
   figura();
   doboz();
-  joHely();
   tologatas();
+  stroke(0);
+  line(40, 0, 40, 400);
+  racs();
+  frameRate(10);
+}
+
+function racs() {
+  let i = 40;
+  while (i < 400) {
+    line(i, 0, i, 400);
+    i += 40;
+  }
+  let j = 40;
+  while (j < 400) {
+    line(0, j, 400, j);
+    j += 40;
+  }
 }
 
 function figura() {
   noStroke();
   fill(255, 0, 0);
   circle(kor.x, kor.y, kor.r);
+  mozgatas(kor)
+}
 
-  if (keyIsPressed === true) {
-     mozgatas(kor)
+function tologatas() {
+  if (kor.x === negyzet.x) {
+    if ((keyCode === UP_ARROW && kor.y === negyzet.y) 
+        || (keyCode === DOWN_ARROW && kor.y === negyzet.y)) {
+      mozgatas(negyzet);
+      //console.log("true")
+    }
+
+    if (kor.y === negyzet.y) {
+      if ((keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) &&
+        kor.x === negyzet.x) {
+        // console.log("true")
+        mozgatas(negyzet);
+      }
+    }
   }
 }
 
-function mozgatas(object){
-   const leptek = 5
-   // https://bobbyhadz.com/blog/javascript-specify-multiple-conditions-in-if-statement
-   if (keyCode === LEFT_ARROW && object.x != 20) {
+function mozgatas(object) {
+  const leptek = 40;
+  // https://bobbyhadz.com/blog/javascript-specify-multiple-conditions-in-if-statement
+  if (keyIsPressed === true) {
+    if (keyCode === LEFT_ARROW && object.x != 20) {
       object.x -= leptek;
     }
     if (keyCode === RIGHT_ARROW && object.x != 380) {
@@ -59,65 +101,23 @@ function mozgatas(object){
     if (keyCode === UP_ARROW && object.y != 20) {
       object.y -= leptek;
     }
-    if ((keyCode === DOWN_ARROW) && (object.y != 380)) {
+    if (keyCode === DOWN_ARROW && object.y != 380) {
       object.y += leptek;
     }
-
+  }
 }
 
 function doboz() {
   noStroke();
   fill(0, 0, 0);
-  rect(xDoboz, yDoboz, wDoboz, wDoboz);
-  if (xDoboz === xJo) {
-    if (yDoboz === yJo) {
-      background(0, 255, 0);
-    }
-  }
+  rect(negyzet.x, negyzet.y, negyzet.w, negyzet.h);
 }
 
 function joHely() {
   noStroke();
   fill(0, 0, 180);
-  square(xJo, yJo, 20);
-}
-
-function tologatas() {
-  let testX;
-  let testY;
-  float((testX = xKor));
-  float((textY = yKor));
-
-  if (xKor < xDoboz) {
-    testX = xDoboz;
-  } else if (xKor > xDoboz + wDoboz) {
-    testX = xDoboz + wDoboz;
-  }
-  if (yKor < yDoboz) {
-    testY = yDoboz;
-  } else if (yKor > yDoboz + wDoboz) {
-    testY = yDoboz + wDoboz;
-  }
-
-  float((distX = xKor - testX));
-  float((distY = yKor - testY));
-  float((distance = sqrt(distX * distX + distY * distY)));
-
-  if (distance <= rKor) {
-    if (keyIsPressed === true) {
-      if (keyCode === UP_ARROW) {
-        yDoboz -= 5;
-      }
-      if (keyCode === DOWN_ARROW) {
-        yDoboz += 5;
-      }
-      if (keyCode === RIGHT_ARROW) {
-        xDoboz += 5;
-      }
-      if (keyCode === LEFT_ARROW) {
-        xDoboz -= 5;
-      }
-    }
+  rect(johely.x, johely.y, johely.h, johely.w);
+  if (negyzet.x === johely.x && negyzet.y === johely.y) {
+    background(0, 255, 0);
   }
 }
-
