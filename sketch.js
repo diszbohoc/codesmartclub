@@ -8,7 +8,7 @@ function draw() {
 
 // https://www.w3schools.com/js/js_objects.asp
 const kor = {
-  x: 20,
+  x: 60,
   y: 140,
   r: 40,
   utolso_hely: {
@@ -18,19 +18,28 @@ const kor = {
 };
 
 const negyzet = {
-  x: 60,
-  y: 180,
+  a: {
+    x: 100,
+    y: 220,
+  },
+  b: {
+    x: 220,
+    y: 100,
+  },
   w: 20,
   h: 20,
-  utolso_hely: {
-    x: 60,
-    y: 180,
-  },
 };
 
 const johely = {
-  x: 100,
-  y: 20,
+  a: {
+    x: 100,
+    y: 180,
+  },
+  b: {
+    x: 60,
+    y: 100,
+  },
+
   w: 20,
   h: 20,
 };
@@ -47,6 +56,7 @@ function draw() {
   line(40, 0, 40, 400);
   racs();
   frameRate(10);
+  falak();
 }
 
 function racs() {
@@ -62,46 +72,78 @@ function racs() {
   }
 }
 
+
+
+function falak() {
+  noStroke();
+  fill(125);
+   
+  const falak = [
+    {x: 200, y: 20, z: 400, d: 20},
+    {x: 200, y: 380, z: 400, d: 20},
+    {x: 20, y: 200, z: 20, d: 400},
+    {x: 380, y: 200, z: 20, d: 400}    
+  ]
+  
+  console.log(falak.length)
+  /* variaciok:
+   lusta init:
+
+   ['tomb1'].foreach(funkcio)
+
+   falak.forEach( negyzetrajzolo )
+   falak.forEach( ( elem ) => {
+       negyzetrajzolo(elem)
+   })
+   */
+  
+  for (i = 0; i < falak.length; i++)
+  {
+    negyzetrajzolo(falak[i])
+  }
+  
+ /* rect(200, 20, 400, 20);
+  rect(200, 380, 400, 20);
+  rect(20, 200, 20, 400);
+  rect(380, 200, 20, 400);*/
+}
+
+function negyzetrajzolo(coordinates){
+  rect(coordinates.x,coordinates.y,coordinates.z,coordinates.d);
+}
+
 function figura() {
   noStroke();
   fill(255, 0, 0);
   circle(kor.x, kor.y, kor.r);
-  mozgatas(kor)
+  mozgatas(kor);
 }
 
 function tologatas() {
-  if (kor.x === negyzet.x) {
-    if ((keyCode === UP_ARROW && kor.y === negyzet.y) 
-        || (keyCode === DOWN_ARROW && kor.y === negyzet.y)) {
-      mozgatas(negyzet);
-      //console.log("true")
-    }
+  erintkezes(negyzet.a);
+  erintkezes(negyzet.b);
+}
 
-    if (kor.y === negyzet.y) {
-      if ((keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) &&
-        kor.x === negyzet.x) {
-        // console.log("true")
-        mozgatas(negyzet);
-      }
-    }
+function erintkezes(object) {
+  if (kor.x === object.x && kor.y === object.y) {
+    mozgatas(object);
   }
 }
 
 function mozgatas(object) {
   const leptek = 40;
-  // https://bobbyhadz.com/blog/javascript-specify-multiple-conditions-in-if-statement
   if (keyIsPressed === true) {
-    if (keyCode === LEFT_ARROW && object.x != 20) {
+    if (keyCode === LEFT_ARROW && object.x != 60) {
       object.x -= leptek;
     }
-    if (keyCode === RIGHT_ARROW && object.x != 380) {
+    if (keyCode === RIGHT_ARROW && object.x != 340) {
       object.x += leptek;
     }
 
-    if (keyCode === UP_ARROW && object.y != 20) {
+    if (keyCode === UP_ARROW && object.y != 60) {
       object.y -= leptek;
     }
-    if (keyCode === DOWN_ARROW && object.y != 380) {
+    if (keyCode === DOWN_ARROW && object.y != 340) {
       object.y += leptek;
     }
   }
@@ -110,14 +152,24 @@ function mozgatas(object) {
 function doboz() {
   noStroke();
   fill(0, 0, 0);
-  rect(negyzet.x, negyzet.y, negyzet.w, negyzet.h);
+  rect(negyzet.a.x, negyzet.a.y, negyzet.w, negyzet.h);
+  rect(negyzet.b.x, negyzet.b.y, negyzet.w, negyzet.h);
 }
 
 function joHely() {
   noStroke();
   fill(0, 0, 180);
-  rect(johely.x, johely.y, johely.h, johely.w);
-  if (negyzet.x === johely.x && negyzet.y === johely.y) {
-    background(0, 255, 0);
+  rect(johely.a.x, johely.a.y, johely.h, johely.w);
+  rect(johely.b.x, johely.b.y, johely.h, johely.w);
+  if (
+    (negyzet.a.x === johely.a.x && negyzet.a.y === johely.a.y) ||
+    (negyzet.a.x === johely.b.x && negyzet.a.y === johely.b.y)
+  ) {
+    if (
+      (negyzet.b.x === johely.b.x && negyzet.b.y === johely.b.y) ||
+      (negyzet.b.x === johely.a.x && negyzet.b.y === johely.a.y)
+    ) {
+      background(0, 255, 0);
+    }
   }
 }

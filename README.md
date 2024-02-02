@@ -28,6 +28,14 @@ Nehézség: Könnyű
 Rövid egyeztetés dícséretekkel fűszerezve. Az alapfunkciók kész vannak. 
 Egyetlen bug van: a kis kör be tud menni a doboz alá, ha jó helyre kerül
 
+# 4. alkalom
+
+Ciklusok, és hasznosságuk. Ha egy funkció kétszer ugyanúgy fut, akkor azt lehet ciklusban paramérerekkel futtatni. 
+Cél a kód újrhasznosítása, amivel rugalmasabban lehet dolgozni.
+
+Ugyanez érvényes a kondiciókra. Ha 2 kondiciót ellenőrzöl, akkor ellenőrizhetsz 3-at, 4-et stb. Érdemes funkcióban és iterálásban gondolkodni.
+Jelige: a programozó lusta.
+
 ## Következő feladat
 Készítsd el az első szintent.
 
@@ -72,5 +80,9 @@ https://www.w3schools.com/js/js_function_parameters.asp
 Ciklusok:
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration
+
 https://webiskola.hu/javascript-ismeretek/javascript-ciklusok-azaz-js-iteraciok-for-while-do-while/
 
+Foreach funkcióhívással
+
+https://www.w3schools.com/jsref/jsref_foreach.asp
