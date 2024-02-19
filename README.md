@@ -36,6 +36,10 @@ Cél a kód újrhasznosítása, amivel rugalmasabban lehet dolgozni.
 Ugyanez érvényes a kondiciókra. Ha 2 kondiciót ellenőrzöl, akkor ellenőrizhetsz 3-at, 4-et stb. Érdemes funkcióban és iterálásban gondolkodni.
 Jelige: a programozó lusta.
 
+# 5. alkalom
+
+Újrahasznosítás tömbökkel. Átbeszélve még egyszer.
+
 ## Következő feladat
 Készítsd el az első szintent.
 

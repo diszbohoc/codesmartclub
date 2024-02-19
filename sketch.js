@@ -30,7 +30,7 @@ const negyzet = {
   h: 20,
 };
 
-const johely = {
+/* const johely = {
   a: {
     x: 100,
     y: 180,
@@ -43,6 +43,7 @@ const johely = {
   w: 20,
   h: 20,
 };
+*/
 
 function draw() {
   background(250);
@@ -72,45 +73,26 @@ function racs() {
   }
 }
 
-
-
 function falak() {
   noStroke();
   fill(125);
-   
+  
   const falak = [
-    {x: 200, y: 20, z: 400, d: 20},
-    {x: 200, y: 380, z: 400, d: 20},
-    {x: 20, y: 200, z: 20, d: 400},
-    {x: 380, y: 200, z: 20, d: 400}    
+    {x: 200, y: 20, h: 400, w: 20},
+    {x: 200, y: 380, h: 400, w: 20},
+    {x: 20, y: 200, h: 20, w: 400},
+    {x: 380, y: 200, h: 20, w: 400},
   ]
-  
-  console.log(falak.length)
-  /* variaciok:
-   lusta init:
-
-   ['tomb1'].foreach(funkcio)
-
-   falak.forEach( negyzetrajzolo )
-   falak.forEach( ( elem ) => {
-       negyzetrajzolo(elem)
-   })
-   */
-  
-  for (i = 0; i < falak.length; i++)
-  {
+  for (i = 0; i < falak.length; i++) {
     negyzetrajzolo(falak[i])
   }
   
- /* rect(200, 20, 400, 20);
-  rect(200, 380, 400, 20);
-  rect(20, 200, 20, 400);
-  rect(380, 200, 20, 400);*/
 }
 
-function negyzetrajzolo(coordinates){
-  rect(coordinates.x,coordinates.y,coordinates.z,coordinates.d);
-}
+function negyzetrajzolo(koord){
+  rect(koord.x, koord.y, koord.h, koord.w)
+  }
+
 
 function figura() {
   noStroke();
@@ -132,7 +114,7 @@ function erintkezes(object) {
 
 function mozgatas(object) {
   const leptek = 40;
-  if (keyIsPressed === true) {
+  if ((keyIsPressed === true)) {
     if (keyCode === LEFT_ARROW && object.x != 60) {
       object.x -= leptek;
     }
@@ -156,20 +138,51 @@ function doboz() {
   rect(negyzet.b.x, negyzet.b.y, negyzet.w, negyzet.h);
 }
 
+const maxJohely = 2
+/*const johely = [
+  {x: 100, y: 180, h: 20, w: 20},
+  {x: 60, y: 100, h: 20, w: 20},
+]*/
+
 function joHely() {
+  
+  /*
+  verzio1:
+   johelyek.forEach(
+    (johely) => {
+      if(johely.x == doboz.x && johely.y == doboz.y){
+        return true
+       // maxjohely += 1
+      } else {
+        return false
+      }
+    }
+  verzio2:
+  
+  for (i = 0; i < johelyek.length; i++) {
+    if(johelyek[i].x == doboz.x && johelyek[i].y == doboz.y){
+      return true
+    }
+  }
+  )*/
   noStroke();
   fill(0, 0, 180);
-  rect(johely.a.x, johely.a.y, johely.h, johely.w);
-  rect(johely.b.x, johely.b.y, johely.h, johely.w);
+  
+  const johely = {
+    a: {x: 100, y: 180, h: 20, w: 20},
+    b: {x: 60, y: 100, h: 20, w: 20}, 
+    }
+  //johely.forEach(negyzetrajzolo)
+    
   if (
     (negyzet.a.x === johely.a.x && negyzet.a.y === johely.a.y) ||
     (negyzet.a.x === johely.b.x && negyzet.a.y === johely.b.y)
   ) {
-    if (
-      (negyzet.b.x === johely.b.x && negyzet.b.y === johely.b.y) ||
-      (negyzet.b.x === johely.a.x && negyzet.b.y === johely.a.y)
+    if(
+      (negyzet.b.x === johely.a.x && negyzet.b.y === johely.a.y) ||
+      (negyzet.b.x === johely.b.x && negyzet.b.y === johely.b.y)
     ) {
       background(0, 255, 0);
-    }
+    } 
   }
 }
