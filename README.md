@@ -40,14 +40,15 @@ Jelige: a programozó lusta.
 
 Újrahasznosítás tömbökkel. Átbeszélve még egyszer.
 
-## Következő feladat
-Készítsd el az első szintent.
 
-1. Falak: először egy keret. Ez móddsítani fogja a max/min mozgást.
-  Tipp: kell hozzá majd egy ciklus
-2. A dobozt középre kell tolni
-3. Bónusz: az első szinten 2 dobozt kell a helyére tolni, hogy vége legyen
-4. A dobozt akkor is tovább lehet tolni, ha jó helyen van!
+# 6. alkalom
+
+Kód átnézve. Lamentálás azon, hogyan lehetne elérni, hogy az emberke ne csússzon be a doboz vagy a fal alá.
+(viszonyrendszer az emberke és a fal/doboz koordinátái közt, a mozgatás során ellenőrizve)
+
+## Következő feladat
+
+1. Az emberke álljon meg, ahol kell.
 
 # Referenciák
 

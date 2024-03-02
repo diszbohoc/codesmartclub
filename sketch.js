@@ -1,66 +1,77 @@
+const kor = {
+  x: 60,
+  y: 140,
+  r: 40,
+};
+
+const negyzet = [
+  { x: 100, y: 220, h: 20, w: 20 },
+  { x: 220, y: 100, h: 20, w: 20 },
+];
+
+const falak = [
+  { x: 200, y: 20, h: 400, w: 20 },
+  { x: 200, y: 380, h: 400, w: 20 },
+  { x: 20, y: 200, h: 20, w: 400 },
+  { x: 380, y: 200, h: 20, w: 400 },
+  { x: 140, y: 200, h: 20, w: 80 },
+];
+
+const johelyek = [
+  { x: 100, y: 180, h: 20, w: 20 },
+  { x: 60, y: 100, h: 20, w: 20 },
+];
+
+let eredmeny = (arr) => arr.every((v) => v === true);
+let maxJohely = [false, false];
+
+
 function setup() {
   createCanvas(400, 400);
 }
 
 function draw() {
-  background(220);
-}
-
-// https://www.w3schools.com/js/js_objects.asp
-const kor = {
-  x: 60,
-  y: 140,
-  r: 40,
-  utolso_hely: {
-    x: 0,
-    y: 0,
-  },
-};
-
-const negyzet = {
-  a: {
-    x: 100,
-    y: 220,
-  },
-  b: {
-    x: 220,
-    y: 100,
-  },
-  w: 20,
-  h: 20,
-};
-
-/* const johely = {
-  a: {
-    x: 100,
-    y: 180,
-  },
-  b: {
-    x: 60,
-    y: 100,
-  },
-
-  w: 20,
-  h: 20,
-};
-*/
-
-function draw() {
   background(250);
   rectMode(RADIUS);
-  joHely();
+  frameRate(10);
 
+  joHely();
   figura();
   doboz();
   tologatas();
-  stroke(0);
-  line(40, 0, 40, 400);
   racs();
-  frameRate(10);
-  falak();
+  falrajzolo();
+  joHelyenVan();
+  mostMindenJo();
+}
+
+function joHely() {
+  noStroke();
+  fill(0, 0, 180);
+
+  johelyek.forEach(negyzetrajzolo);
+}
+
+function figura() {
+  mozgatas(kor)
+  noStroke();
+  fill(255, 0, 0);
+  circle(kor.x, kor.y, kor.r);
+}
+
+function doboz() {
+  noStroke();
+  fill(0, 0, 0);
+  negyzet.forEach(negyzetrajzolo);
+
+}
+
+function tologatas() {
+  negyzet.forEach(erintkezes);
 }
 
 function racs() {
+  stroke(0);
   let i = 40;
   while (i < 400) {
     line(i, 0, i, 400);
@@ -73,37 +84,17 @@ function racs() {
   }
 }
 
-function falak() {
+function falrajzolo() {
   noStroke();
   fill(125);
-  
-  const falak = [
-    {x: 200, y: 20, h: 400, w: 20},
-    {x: 200, y: 380, h: 400, w: 20},
-    {x: 20, y: 200, h: 20, w: 400},
-    {x: 380, y: 200, h: 20, w: 400},
-  ]
+
   for (i = 0; i < falak.length; i++) {
-    negyzetrajzolo(falak[i])
+    negyzetrajzolo(falak[i]);
   }
-  
 }
 
-function negyzetrajzolo(koord){
-  rect(koord.x, koord.y, koord.h, koord.w)
-  }
-
-
-function figura() {
-  noStroke();
-  fill(255, 0, 0);
-  circle(kor.x, kor.y, kor.r);
-  mozgatas(kor);
-}
-
-function tologatas() {
-  erintkezes(negyzet.a);
-  erintkezes(negyzet.b);
+function negyzetrajzolo(koord) {
+  rect(koord.x, koord.y, koord.h, koord.w);
 }
 
 function erintkezes(object) {
@@ -114,7 +105,7 @@ function erintkezes(object) {
 
 function mozgatas(object) {
   const leptek = 40;
-  if ((keyIsPressed === true)) {
+  if (keyIsPressed === true) {
     if (keyCode === LEFT_ARROW && object.x != 60) {
       object.x -= leptek;
     }
@@ -131,58 +122,20 @@ function mozgatas(object) {
   }
 }
 
-function doboz() {
-  noStroke();
-  fill(0, 0, 0);
-  rect(negyzet.a.x, negyzet.a.y, negyzet.w, negyzet.h);
-  rect(negyzet.b.x, negyzet.b.y, negyzet.w, negyzet.h);
-}
-
-const maxJohely = 2
-/*const johely = [
-  {x: 100, y: 180, h: 20, w: 20},
-  {x: 60, y: 100, h: 20, w: 20},
-]*/
-
-function joHely() {
-  
-  /*
-  verzio1:
-   johelyek.forEach(
-    (johely) => {
-      if(johely.x == doboz.x && johely.y == doboz.y){
-        return true
-       // maxjohely += 1
-      } else {
-        return false
-      }
-    }
-  verzio2:
-  
-  for (i = 0; i < johelyek.length; i++) {
-    if(johelyek[i].x == doboz.x && johelyek[i].y == doboz.y){
-      return true
+function joHelyenVan() {
+  for (i = 0; i < negyzet.length; i++) {
+    if (johelyek[i].x === negyzet[i].x && johelyek[i].y === negyzet[i].y) {
+      maxJohely[i] = true;
+      console.log(maxJohely);
+      console.log(eredmeny);
+    } else {
+      maxJohely[i] = false;
     }
   }
-  )*/
-  noStroke();
-  fill(0, 0, 180);
-  
-  const johely = {
-    a: {x: 100, y: 180, h: 20, w: 20},
-    b: {x: 60, y: 100, h: 20, w: 20}, 
-    }
-  //johely.forEach(negyzetrajzolo)
-    
-  if (
-    (negyzet.a.x === johely.a.x && negyzet.a.y === johely.a.y) ||
-    (negyzet.a.x === johely.b.x && negyzet.a.y === johely.b.y)
-  ) {
-    if(
-      (negyzet.b.x === johely.a.x && negyzet.b.y === johely.a.y) ||
-      (negyzet.b.x === johely.b.x && negyzet.b.y === johely.b.y)
-    ) {
-      background(0, 255, 0);
-    } 
+}
+
+function mostMindenJo() {
+  if (eredmeny(maxJohely) === true) {
+    background(0, 255, 0, 20);
   }
 }
