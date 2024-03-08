@@ -25,7 +25,7 @@ Nehézség: Könnyű
 
 # 3. alkalom
 
-Rövid egyeztetés dícséretekkel fűszerezve. Az alapfunkciók kész vannak. 
+Rövid egyeztetés dícséretekkel fűszerezve. Az alapfunkciók kész vannak. n
 Egyetlen bug van: a kis kör be tud menni a doboz alá, ha jó helyre kerül
 
 # 4. alkalom

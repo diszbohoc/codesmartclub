@@ -1,13 +1,15 @@
-const kor = {
+const figura = {
   x: 60,
   y: 140,
   r: 40,
 };
 
-const negyzet = [
+const dobozok = [
   { x: 100, y: 220, h: 20, w: 20 },
   { x: 220, y: 100, h: 20, w: 20 },
 ];
+
+
 
 const falak = [
   { x: 200, y: 20, h: 400, w: 20 },
@@ -17,6 +19,8 @@ const falak = [
   { x: 140, y: 200, h: 20, w: 80 },
 ];
 
+const falregiszter = []
+
 const johelyek = [
   { x: 100, y: 180, h: 20, w: 20 },
   { x: 60, y: 100, h: 20, w: 20 },
@@ -25,44 +29,114 @@ const johelyek = [
 let eredmeny = (arr) => arr.every((v) => v === true);
 let maxJohely = [false, false];
 
+const level1 = {
+  fal: {
+    minx: 180,
+    maxX: 380,
+    miny: 180,
+    maxY: 180
+  }
+}
+
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(400, 400)
+  falsetup()
+  noLoop()
+
 }
 
 function draw() {
   background(250);
   rectMode(RADIUS);
-  frameRate(10);
+  frameRate(50);
+  const aobj = { x: 1, y: 2}
+  const bobj = { x: 1, y: 2}
+  
+  if( aobj === bobj){
+    console.log("egyenlok")
+  } else {
+    console.log("nemegyenlo")
+  }
 
-  joHely();
+  if( (aobj.x == bobj.x) && (aobj.y == bobj.y)){
+    console.log("ez igy egyenlo")
+  }
+
+  racsrajzolo()
+  level1Setup()
+  falrajzolo()
+  figurarajzolo()
+ /* johelyrajzolo()
+  dobozrajzolo()
+  figurarajzolo()
+  /*joHely();
   figura();
   doboz();
   tologatas();
-  racs();
-  falrajzolo();
+  ;
+  ;
   joHelyenVan();
-  mostMindenJo();
+  mostMindenJo();*/
 }
 
-function joHely() {
+// statikus
+function racsrajzolo() {
+  stroke(0);
+  let i = 40;
+  while (i < 400) {
+    line(i, 0, i, 400);
+    line(0,i,400,i)
+    i += 40;
+  }
+}
+
+function falsetup() {
+  // keret
+  [20,380].forEach((koor) => {
+    for(let i = 20; i < 400; i+= 20){
+      const fal = [
+        {x: koor, y: i},
+        {x: i, y: koor}
+      ]
+      falregiszter.push(...fal)
+    }
+  }) 
+  console.log(falregiszter)
+}
+
+function level1Setup(){
+  for( let i = level1.fal.minx; i < level1.fal.maxX; i+= 20){
+    const fal = {x: i, y: level1.fal.miny }
+    falregiszter.push(fal)
+  }
+}
+
+function falrajzolo(){
+  noStroke()
+  fill(125)
+  falregiszter.forEach((fal) => negyzetrajzolo(fal))
+}
+
+function johelyrajzolo() {
   noStroke();
   fill(0, 0, 180);
 
   johelyek.forEach(negyzetrajzolo);
 }
 
-function figura() {
-  mozgatas(kor)
+// mozgo
+function figurarajzolo() {
+  //mozgatas(kor)
   noStroke();
   fill(255, 0, 0);
-  circle(kor.x, kor.y, kor.r);
+  circle(figura.x, figura.y, figura.r);
 }
 
-function doboz() {
+function dobozrajzolo() {
   noStroke();
   fill(0, 0, 0);
-  negyzet.forEach(negyzetrajzolo);
+  dobozok.forEach(negyzetrajzolo);
 
 }
 
@@ -70,31 +144,10 @@ function tologatas() {
   negyzet.forEach(erintkezes);
 }
 
-function racs() {
-  stroke(0);
-  let i = 40;
-  while (i < 400) {
-    line(i, 0, i, 400);
-    i += 40;
-  }
-  let j = 40;
-  while (j < 400) {
-    line(0, j, 400, j);
-    j += 40;
-  }
-}
 
-function falrajzolo() {
-  noStroke();
-  fill(125);
-
-  for (i = 0; i < falak.length; i++) {
-    negyzetrajzolo(falak[i]);
-  }
-}
-
+// generikus
 function negyzetrajzolo(koord) {
-  rect(koord.x, koord.y, koord.h, koord.w);
+  rect(koord.x, koord.y, 20);
 }
 
 function erintkezes(object) {
@@ -103,9 +156,43 @@ function erintkezes(object) {
   }
 }
 
-function mozgatas(object) {
-  const leptek = 40;
-  if (keyIsPressed === true) {
+function keyPressed() {  
+  const leptek = 40
+  //console.log(falak)
+  if (keyCode === LEFT_ARROW){
+    figura.x -= leptek
+  }
+  if (keyCode === RIGHT_ARROW){
+    figura.x += leptek
+  }
+  if (keyCode === UP_ARROW) {
+    figura.y -= leptek
+  }
+  if (keyCode === DOWN_ARROW) {
+    figura.y += leptek
+  }
+  redraw()
+}
+
+function lephet(object){
+  console.log(object.x)
+  const valami =  falak.some( (fal) => 
+    fal.x == (object.x - 40) ||
+    fal.y == (object.y - 40)
+  )
+  console.log(valami)
+  return !(falak.some( (fal) => fal.x == (object.x - 40)))
+  /*if(object.name === "kor"){
+
+  }*/
+}
+
+function mozgatas(irany) {
+  
+  if(irany == "bal"){
+    kor.x -= kor.x != 60 ?? leptek
+  }
+/*  if (keyIsPressed === true) {
     if (keyCode === LEFT_ARROW && object.x != 60) {
       object.x -= leptek;
     }
@@ -119,7 +206,7 @@ function mozgatas(object) {
     if (keyCode === DOWN_ARROW && object.y != 340) {
       object.y += leptek;
     }
-  }
+  }*/
 }
 
 function joHelyenVan() {
