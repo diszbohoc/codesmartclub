@@ -54,6 +54,41 @@ Ismételten beszélgettünk a kódról és a javítási lehetőségekről. Ötle
 - segítség a falak/blokkok beazonosításához (falak, mint négyzetek)
 - kód valamilyen logikai sorba rendezése
 
+## "saját" verzió
+
+Felraktam egy saját branch-et, amiben az én elképzeléseimet próbálom bemutatni.
+
+Ebben van egy pár dolog, amit még nem magyaráztam el.
+
+### Tömbök egyesítése
+
+
+```
+const tömb = ["d", "e"]
+
+const masik_tömb = [ "a", "b", "c"]
+
+// a masik_tömböt beleolvaszom a tömb-be
+
+tömb.push(...masik_tömb)
+
+console.log(tömb)
+
+// prints: ['d", "e", "a", "b", "c" ]
+
+```
+
+### iterálás tömbön anélkül, hogy változóba mentenéd:
+
+```
+[1,2].forEach((szam) =>
+  //   prints: 1
+  //           2 
+  console.log(szam)
+
+)
+```
+
 ## Következő feladat
 
 1. Az emberke álljon meg, ahol kell.
