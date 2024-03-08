@@ -46,6 +46,14 @@ Jelige: a programozó lusta.
 Kód átnézve. Lamentálás azon, hogyan lehetne elérni, hogy az emberke ne csússzon be a doboz vagy a fal alá.
 (viszonyrendszer az emberke és a fal/doboz koordinátái közt, a mozgatás során ellenőrizve)
 
+# 7. alkalom
+
+Ismételten beszélgettünk a kódról és a javítási lehetőségekről. Ötletek:
+
+- funkciók átnevezése beszédesebbé
+- segítség a falak/blokkok beazonosításához (falak, mint négyzetek)
+- kód valamilyen logikai sorba rendezése
+
 ## Következő feladat
 
 1. Az emberke álljon meg, ahol kell.

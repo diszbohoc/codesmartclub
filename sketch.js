@@ -22,6 +22,10 @@ const johelyek = [
   { x: 60, y: 100, h: 20, w: 20 },
 ];
 
+
+/* az az érzésem, hogy ez egy kicsit túltolja, amit kellene csinálnia
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every#testing_size_of_all_array_elements
+*/
 let eredmeny = (arr) => arr.every((v) => v === true);
 let maxJohely = [false, false];
 
