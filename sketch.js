@@ -1,3 +1,7 @@
+function setup() {
+  createCanvas(400, 400);
+}
+
 const kor = {
   x: 60,
   y: 140,
@@ -5,34 +9,12 @@ const kor = {
 };
 
 const negyzet = [
-  { x: 100, y: 220, h: 20, w: 20 },
+  { x: 100, y: 220, h: 20, w: 20,
+  
+   mozgas: mozgas() 
+  },
   { x: 220, y: 100, h: 20, w: 20 },
 ];
-
-const falak = [
-  { x: 200, y: 20, h: 400, w: 20 },
-  { x: 200, y: 380, h: 400, w: 20 },
-  { x: 20, y: 200, h: 20, w: 400 },
-  { x: 380, y: 200, h: 20, w: 400 },
-  { x: 140, y: 200, h: 20, w: 80 },
-];
-
-const johelyek = [
-  { x: 100, y: 180, h: 20, w: 20 },
-  { x: 60, y: 100, h: 20, w: 20 },
-];
-
-
-/* az az érzésem, hogy ez egy kicsit túltolja, amit kellene csinálnia
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every#testing_size_of_all_array_elements
-*/
-let eredmeny = (arr) => arr.every((v) => v === true);
-let maxJohely = [false, false];
-
-
-function setup() {
-  createCanvas(400, 400);
-}
 
 function draw() {
   background(250);
@@ -49,31 +31,6 @@ function draw() {
   mostMindenJo();
 }
 
-function joHely() {
-  noStroke();
-  fill(0, 0, 180);
-
-  johelyek.forEach(negyzetrajzolo);
-}
-
-function figura() {
-  mozgatas(kor)
-  noStroke();
-  fill(255, 0, 0);
-  circle(kor.x, kor.y, kor.r);
-}
-
-function doboz() {
-  noStroke();
-  fill(0, 0, 0);
-  negyzet.forEach(negyzetrajzolo);
-
-}
-
-function tologatas() {
-  negyzet.forEach(erintkezes);
-}
-
 function racs() {
   stroke(0);
   let i = 40;
@@ -81,17 +38,25 @@ function racs() {
     line(i, 0, i, 400);
     i += 40;
   }
-  let j = 40;
+  const j: int = "macska";
+  
   while (j < 400) {
     line(0, j, 400, j);
     j += 40;
   }
 }
-
+const falak = [
+    { x: 200, y: 20, h: 400, w: 20 },
+    { x: 200, y: 380, h: 400, w: 20 },
+    { x: 20, y: 200, h: 20, w: 400 },
+    { x: 380, y: 200, h: 20, w: 400 },
+    { x: 140, y: 180, h: 20, w: 20},
+  ];
+  
 function falrajzolo() {
   noStroke();
   fill(125);
-
+  
   for (i = 0; i < falak.length; i++) {
     negyzetrajzolo(falak[i]);
   }
@@ -99,6 +64,18 @@ function falrajzolo() {
 
 function negyzetrajzolo(koord) {
   rect(koord.x, koord.y, koord.h, koord.w);
+}
+
+function figura() {
+  mozgatas(kor)
+  noStroke();
+  fill(255, 0, 0);
+  circle(kor.x, kor.y, kor.r);
+
+}
+
+function tologatas() {
+  negyzet.forEach(erintkezes);
 }
 
 function erintkezes(object) {
@@ -124,6 +101,28 @@ function mozgatas(object) {
       object.y += leptek;
     }
   }
+    
+  
+}
+
+function doboz() {
+  noStroke();
+  fill(0, 0, 0);
+  negyzet.forEach(negyzetrajzolo);
+}
+
+let maxJohely = [false, false];
+const johelyek = [
+  { x: 100, y: 180, h: 20, w: 20 },
+  { x: 60, y: 100, h: 20, w: 20 },
+];
+
+let eredmeny = (arr) => arr.every((v) => v === true);
+
+function mostMindenJo() {
+  if (eredmeny(maxJohely) === true) {
+    background(0, 255, 0, 20);
+  }
 }
 
 function joHelyenVan() {
@@ -138,8 +137,9 @@ function joHelyenVan() {
   }
 }
 
-function mostMindenJo() {
-  if (eredmeny(maxJohely) === true) {
-    background(0, 255, 0, 20);
-  }
+function joHely() {
+  noStroke();
+  fill(0, 0, 180);
+
+  johelyek.forEach(negyzetrajzolo);
 }
