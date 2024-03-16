@@ -3,23 +3,41 @@ const figura = {
   x: 60,
   y: 140,
   r: 40,
+  rajzolj: () => circle(figura.x,figura.y,figura.r),
+  szomszed: undefined,
+  mehetek: () => {
+    let mehetek = mehet(figura.next)
+    if(figura.szomszed != undefined){
+      mehetek = mehet(figura.szomszed.next)
+    }
+    return mehetek
+  },
+  next: {},
+  mozogj: () => mozogj(figura, figura.next)
 };
 
 const dobozok = [
-  { name: "doboz", x: 100, y: 220, h: 20, w: 20 },
-  { name: "doboz", x: 220, y: 100, h: 20, w: 20 },
+  { 
+    name: "doboz", 
+    x: 100, 
+    y: 220,
+    next: {},
+  },
+  { 
+    name: "doboz", 
+    x: 220,
+    y: 100,
+    next: {}
+  }
 ];
 
-
-
-const falak = [
-  { x: 200, y: 20, h: 400, w: 20 },
-  { x: 200, y: 380, h: 400, w: 20 },
-  { x: 20, y: 200, h: 20, w: 400 },
-  { x: 380, y: 200, h: 20, w: 400 },
-  { x: 140, y: 200, h: 20, w: 80 },
-];
-
+function mozogj(object, nextobject){
+  console.log("mozognek")
+  console.log(object)
+  console.log(nextobject)
+  object.x = nextobject.x
+  object.y = nextobject.y
+}
 const falregiszter = []
 
 const johelyek = [
@@ -108,16 +126,14 @@ function falrajzolo() {
 function johelyrajzolo() {
   noStroke();
   fill(0, 0, 180);
-
   johelyek.forEach(negyzetrajzolo);
 }
 
 // mozgo
 function figurarajzolo() {
-  //mozgatas(kor)
   noStroke();
   fill(255, 0, 0);
-  circle(figura.x, figura.y, figura.r);
+  figura.rajzolj()
 }
 
 function dobozrajzolo() {
@@ -129,28 +145,24 @@ function dobozrajzolo() {
 
 function tologatas() {
   const tologatni = []
-  const nextfigura = mozgatas(figura)
-  console.log(nextfigura)
-  const dobozkoordinata = erintkezes(nextfigura)
-  if(dobozkoordinata){
-    const nextdoboz = mozgatas(dobozkoordinata)
-    console.log(dobozkoordinata)
-    tologatni.push({from: dobozkoordinata,to: nextdoboz})
-  } else {
-    tologatni.push({from: figura,to: nextfigura})
+  mozgatas(figura)
+  erintkezes()
+  console.log(figura.szomszed)
+  if(figura.szomszed){
+    mozgatas(figura.szomszed)
   }
-  tologatni.forEach((mozgas) => 
-    Object.entries(mozgas.to).forEach(([key, value]) => {
-      mozgas.from[key] = mozgas.to[key]
-    }))
-  /*Object.entries(nextobject).forEach(([key, value]) => {
-    object[key] = nextobject[key]
-  })*/
+  if(figura.mehetek()){
+    figura.mozogj()
+    if(figura.szomszed){
+      mozogj(figura.szomszed,figura.szomszed.next)
+    }
+  }
 }
 
 
-function erintkezes(figura){
-  return dobozok.find((doboz) => figura.x === doboz.x && figura.y === doboz.y )
+
+function erintkezes(){
+  figura.szomszed = dobozok.find((doboz) => figura.next.x === doboz.x && figura.next.y === doboz.y )
 }
 
 // generikus
@@ -165,23 +177,18 @@ function mehet(object) {
 
 function mozgatas(object) {
   const leptek = 40
-  const nextobject = { ...object }
+  object.next = { ...object }
   if (keyCode === LEFT_ARROW) {
-    nextobject.x -= leptek
+    object.next.x -= leptek
   }
   if (keyCode === RIGHT_ARROW) {
-    nextobject.x += leptek
+    object.next.x += leptek
   }
   if (keyCode === UP_ARROW) {
-    nextobject.y -= leptek
+    object.next.y -= leptek
   }
   if (keyCode === DOWN_ARROW) {
-    nextobject.y += leptek
-  }
-  if(mehet(nextobject)){
-    return nextobject
-  } else {
-    return object
+    object.next.y += leptek
   }
 }
 
