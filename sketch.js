@@ -1,101 +1,40 @@
+// ez egy kicsit komplex objektum lett, de van benne minden, egy másik branch-ben megmutatom,
+//hogyan lehet ezt egy picivel szebben, osztálydefinícióval
 const figura = {
+  // ez csak azért, hogy tudjuk, kik vagyunk
   name: "figura",
+  // koordinatak
   x: 60,
   y: 140,
   r: 40,
-  rajzolj: () => circle(figura.x,figura.y,figura.r),
+  // ide regisztráljuk az érintkezésnél a dobozokat, 
+  //így lehet ellenőrizni majd lentebb, hogy mehet-e
   szomszed: undefined,
+  // a következő lépés
+  next: {},
+  // anomim funkció, megrajzolom saját magam
+  rajzolj: () => {
+    noStroke()
+    fill(255, 0, 0)
+    circle(figura.x, figura.y, figura.r)
+  },
+  // megnézem, hogy a következő lépés nem fal-e, vagy a szomszéd következő lépése nem ütközik-e
+  // így akadályozom meg, hogy ha a doboz már nem tud tovább menni, akkor a figura sem
   mehetek: () => {
     let mehetek = mehet(figura.next)
-    if(figura.szomszed != undefined){
+    if (figura.szomszed != undefined) {
       mehetek = mehet(figura.szomszed.next)
     }
     return mehetek
   },
-  next: {},
   mozogj: () => mozogj(figura, figura.next)
 };
 
-const dobozok = [
-  { 
-    name: "doboz", 
-    x: 100, 
-    y: 220,
-    next: {},
-  },
-  { 
-    name: "doboz", 
-    x: 220,
-    y: 100,
-    next: {}
-  }
-];
 
-function mozogj(object, nextobject){
-  console.log("mozognek")
-  console.log(object)
-  console.log(nextobject)
-  object.x = nextobject.x
-  object.y = nextobject.y
-}
+
+// ide gyűjtöm be a fal koordinátáit
+// ha minden négyzet, akkor egyszerűbb ellenőrizni a mozgást
 const falregiszter = []
-
-const johelyek = [
-  { x: 100, y: 180, h: 20, w: 20 },
-  { x: 60, y: 100, h: 20, w: 20 },
-];
-
-let eredmeny = (arr) => arr.every((v) => v === true);
-let maxJohely = [false, false];
-
-const level1 = {
-  fal: {
-    minx: 180,
-    maxX: 380,
-    miny: 180,
-    maxY: 180
-  }
-}
-
-
-function setup() {
-  createCanvas(400, 400)
-  falsetup()
-  noLoop()
-
-}
-
-function draw() {
-  background(250);
-  rectMode(RADIUS);
-  frameRate(50);
-
-  racsrajzolo()
-  level1Setup()
-  falrajzolo()
-  johelyrajzolo()
-  figurarajzolo()
-  dobozrajzolo()
-  /*joHely();
-  figura();
-  doboz();
-  tologatas();
-  ;
-  ;
-  joHelyenVan();
-  mostMindenJo();*/
-}
-
-// statikus
-function racsrajzolo() {
-  stroke(0);
-  let i = 40;
-  while (i < 400) {
-    line(i, 0, i, 400);
-    line(0, i, 400, i)
-    i += 40;
-  }
-}
 
 function falsetup() {
   // keret
@@ -110,11 +49,104 @@ function falsetup() {
   })
 }
 
-function level1Setup() {
-  for (let i = level1.fal.minx; i < level1.fal.maxX; i += 20) {
-    const fal = { x: i, y: level1.fal.miny }
+const johelyek = [];
+const dobozok = []
+
+// szintek, ahol további falakat tudsz megadni
+// ide kerül a dobozok és a jóhelyek
+// a szintsetup funkció rajzolja meg őket
+const szintek ={
+  1: {
+    fal: {
+      minx: 180,
+      maxX: 380,
+      miny: 180,
+      maxY: 180
+    },
+    johelyek: [
+      { x: 100,
+        y: 180,
+        h: 20,
+        w: 20
+      },
+      { x: 60,
+        y: 100,
+        h: 20,
+        w: 20 
+      }
+    ],
+    dobozok: [
+      {
+        name: "doboz",
+        x: 100,
+        y: 220,
+        next: { },
+      },
+      {
+        name: "doboz",
+        x: 220,
+        y: 100,
+        next: { }
+      }
+    ]
+  }
+}
+
+function setup() {
+  createCanvas(400, 400)
+  falsetup()
+  // mivel a falakat csak egyszer akarjuk rajzolni 
+  // és nem folyamatosan, ezért nem akarunk ciklust
+  noLoop()
+}
+
+function draw() {
+  background(250);
+  rectMode(RADIUS);
+  frameRate(50);
+
+  racsrajzolo()
+  szintsetup(1)
+  falrajzolo()
+  figura.rajzolj()
+  mostMindenJo()
+}
+
+// statikus
+function racsrajzolo() {
+  stroke(0);
+  let i = 40;
+  while (i < 400) {
+    line(i, 0, i, 400);
+    line(0, i, 400, i)
+    i += 40;
+  }
+}
+
+function szintsetup(szint) {
+  for (let i = szintek[szint].fal.minx; i < szintek[szint].fal.maxX; i += 20) {
+    const fal = { x: i, y: szintek[szint].fal.miny }
     falregiszter.push(fal)
   }
+  // ez több szint esetén marhaság, mert akkor hozzáadod
+  // mivel most csak 1 szintünk van, megteszi
+  johelyek.push(...szintek[szint].johelyek)
+  szintek[szint].johelyek.forEach((johely) => {
+    noStroke()
+    fill(0, 0, 180);
+    negyzetrajzolo(johely)
+  })
+  dobozok.push(...szintek[szint].dobozok)
+  szintek[szint].dobozok.forEach((doboz) => {
+    noStroke();
+    fill(0, 0, 0);
+    negyzetrajzolo(doboz)
+  })
+}
+
+// generikus
+function negyzetrajzolo(koord) {
+  rect(koord.x, koord.y, 20);
 }
 
 function falrajzolo() {
@@ -123,51 +155,31 @@ function falrajzolo() {
   falregiszter.forEach((fal) => negyzetrajzolo(fal))
 }
 
-function johelyrajzolo() {
-  noStroke();
-  fill(0, 0, 180);
-  johelyek.forEach(negyzetrajzolo);
-}
-
-// mozgo
-function figurarajzolo() {
-  noStroke();
-  fill(255, 0, 0);
-  figura.rajzolj()
-}
-
-function dobozrajzolo() {
-  noStroke();
-  fill(0, 0, 0);
-  dobozok.forEach(negyzetrajzolo);
-
+function mozogj(object, nextobject) {
+  object.x = nextobject.x
+  object.y = nextobject.y
 }
 
 function tologatas() {
-  const tologatni = []
   mozgatas(figura)
   erintkezes()
-  console.log(figura.szomszed)
-  if(figura.szomszed){
+  if (figura.szomszed) {
     mozgatas(figura.szomszed)
   }
-  if(figura.mehetek()){
+  // ez lehetne kissé szebb is, de egyelőre jó ez
+  if (figura.mehetek()) {
     figura.mozogj()
-    if(figura.szomszed){
-      mozogj(figura.szomszed,figura.szomszed.next)
+    if (figura.szomszed) {
+      mozogj(figura.szomszed, figura.szomszed.next)
+      figura.szomszed.johelyenvan = joHelyenVan(figura.szomszed)
     }
   }
 }
 
-
-
-function erintkezes(){
-  figura.szomszed = dobozok.find((doboz) => figura.next.x === doboz.x && figura.next.y === doboz.y )
-}
-
-// generikus
-function negyzetrajzolo(koord) {
-  rect(koord.x, koord.y, 20);
+function erintkezes() {
+  // a find visszaadja a meglelet objektumot a tömbben.
+  // ezzel a figurának be lehet állítani a szomszédját
+  figura.szomszed = dobozok.find((doboz) => figura.next.x === doboz.x && figura.next.y === doboz.y)
 }
 
 function mehet(object) {
@@ -199,20 +211,12 @@ function keyPressed() {
   redraw()
 }
 
-function joHelyenVan() {
-  for (i = 0; i < negyzet.length; i++) {
-    if (johelyek[i].x === negyzet[i].x && johelyek[i].y === negyzet[i].y) {
-      maxJohely[i] = true;
-      console.log(maxJohely);
-      console.log(eredmeny);
-    } else {
-      maxJohely[i] = false;
-    }
-  }
+function joHelyenVan(object) {
+  return johelyek.some((johely) => johely.x === object.x && johely.y === object.y)
 }
 
 function mostMindenJo() {
-  if (eredmeny(maxJohely) === true) {
+  if (dobozok.every((doboz) => doboz.johelyenvan)) {
     background(0, 255, 0, 20);
   }
 }
