@@ -1,34 +1,30 @@
-// ez egy kicsit komplex objektum lett, de van benne minden, egy másik branch-ben megmutatom,
-//hogyan lehet ezt egy picivel szebben, osztálydefinícióval
-const figura = {
-  // ez csak azért, hogy tudjuk, kik vagyunk
-  name: "figura",
-  // koordinatak
-  x: 60,
-  y: 140,
-  r: 40,
-  // ide regisztráljuk az érintkezésnél a dobozokat, 
-  //így lehet ellenőrizni majd lentebb, hogy mehet-e
-  szomszed: undefined,
-  // a következő lépés
-  next: {},
-  // anomim funkció, megrajzolom saját magam
-  rajzolj: () => {
+/* a fenti egy class megvalósításban így nézne ki
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+*/
+class Figura {
+  szomszed = undefined
+  next = {}
+  constructor(){
+    this.x = 60
+    this.y = 140,
+    this.r = 40
+  }
+  rajzolj(){
     noStroke()
     fill(255, 0, 0)
-    circle(figura.x, figura.y, figura.r)
-  },
-  // megnézem, hogy a következő lépés nem fal-e, vagy a szomszéd következő lépése nem ütközik-e
-  // így akadályozom meg, hogy ha a doboz már nem tud tovább menni, akkor a figura sem
-  mehetek: () => {
-    let mehetek = mehet(figura.next)
-    if (figura.szomszed != undefined) {
-      mehetek = mehet(figura.szomszed.next)
+    circle(this.x,this.y,this.r)
+  }
+  mehetek(){
+    let mehetek = mehet(this.next)
+    if(this.szomszed != undefined){
+      mehetek = mehet(this.szomszed.next)
     }
     return mehetek
-  },
-  mozogj: () => mozogj(figura, figura.next)
-};
+  }
+  mozogj(){
+    mozogj(this,this.next)
+  }
+}
 
 
 
@@ -99,6 +95,8 @@ function setup() {
   // és nem folyamatosan, ezért nem akarunk ciklust
   noLoop()
 }
+
+const figura = new Figura()
 
 function draw() {
   background(250);
